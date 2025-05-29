@@ -69,3 +69,11 @@ def mutate(individual, max_depth=4):
         node.right = new_subtree.right
     
     return individual
+
+def mutate_constants(individual, mutation_rate=0.1):
+    tree, constants = individual
+    new_constants = [
+        c + random.gauss(0, 0.5) if random.random() < mutation_rate else c
+        for c in constants
+    ]
+    return tree, new_constants

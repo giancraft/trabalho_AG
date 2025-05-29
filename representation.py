@@ -55,3 +55,44 @@ def tree_to_expression(node):
         return f"{node.value}({tree_to_expression(node.left)})"
     else:
         return f"({tree_to_expression(node.left)} {node.value} {tree_to_expression(node.right)})"
+    
+def generate_individual(max_depth):
+    tree = generate_tree(max_depth)
+    constants = [random.uniform(-10, 10) for _ in range(10)]
+    return tree, constants
+
+def count_nodes(node):
+    """Conta o número de nós na árvore"""
+    if node is None:
+        return 0
+    return 1 + count_nodes(node.left) + count_nodes(node.right)
+
+def simplify_tree(node):
+    if node is None:
+        return None
+        
+    # Simplificar sub-árvores
+    node.left = simplify_tree(node.left)
+    node.right = simplify_tree(node.right)
+    
+    # Apenas aplicar regras se ambos os filhos existirem
+    if node.left and node.right:
+        if node.value == '*':
+            if node.left.value == '0' or node.right.value == '0':
+                return Node('0')
+            if node.left.value == '1':
+                return node.right
+            if node.right.value == '1':
+                return node.left
+                
+        elif node.value == '+':
+            if node.left.value == '0':
+                return node.right
+            if node.right.value == '0':
+                return node.left
+                
+        elif node.value == '-':
+            if node.right.value == '0':
+                return node.left
+    
+    return node
