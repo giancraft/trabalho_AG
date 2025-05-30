@@ -15,7 +15,7 @@ def run_comparison():
     print("Executando AG tradicional...")
     start_time = time.time()
     # Note: genetic_algorithm agora retorna (tree, constants) no best_individual
-    result_simple = genetic_algorithm(X, y, pop_size=100, generations=100)
+    result_simple = genetic_algorithm(X, y, pop_size=200, generations=100)
     simple_time = time.time() - start_time
     # Desempacotar resultado
     best_individual_simple, best_fitness_simple, best_hist_simple, avg_hist_simple = result_simple[:4]
